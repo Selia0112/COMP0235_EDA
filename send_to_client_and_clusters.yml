@@ -1,0 +1,64 @@
+---
+- name: Distribute Python scripts to clients and clusters
+  hosts: cluster
+  become: yes
+  tasks:
+    - name: Copy pipeline_script.py
+      copy:
+        src: /home/ec2-user/pipeline_script_new.py
+        dest: /home/ec2-user/data
+        owner: ec2-user
+        group: ec2-user
+        mode: '0755'
+    
+    - name: Copy results_parser.py
+      copy:
+        src: /home/ec2-user/results_parser_new.py
+        dest: /home/ec2-user/data
+        owner: ec2-user
+        group: ec2-user
+        mode: '0755'
+      
+    - name: Copy select_ids.py
+      copy:
+        src: /home/ec2-user/select_ids_new.py
+        dest: /home/ec2-user/data
+        owner: ec2-user
+        group: ec2-user
+        mode: '0755'
+
+- name: Copy weights directory to clients
+  hosts: clients
+  tasks:
+    - name: Copy weights directory to client machines
+      copy:
+        src: /home/ec2-user/weights
+        dest: /home/ec2-user/data/s4pred/weights/ 
+        owner: ec2-user
+        group: ec2-user
+        mode: '0755'
+        remote_src: no
+        directory_mode: '0755'
+
+- name: Transfer hh-suite-new directory to clients and clusters
+  hosts: cluster
+  tasks:
+    - name: Copy hh-suite-new directory to remote hosts
+      copy:
+        src: /home/ec2-user/hh-suite-new
+        dest: /home/ec2-user/data/hh-suite-new
+        owner: ec2-user
+        group: ec2-user
+        mode: '0755'
+  
+- name: Distribute uniprotkb_proteome_UP000005640_2023_10_05.fasta file to clients
+  hosts: cluster
+  become: yes
+  tasks:
+    - name: Copy uniprotkb_proteome_UP000005640_2023_10_05.fasta file to clients
+      copy:
+        src: /home/ec2-user/uniprotkb_proteome_UP000005640_2023_10_05.fasta
+        dest: /home/ec2-user/data
+        mode: '0755'
+        owner: ec2-user
+        group: ec2-user

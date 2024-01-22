@@ -1,0 +1,61 @@
+---
+- name: Create a directory
+  hosts: cluster
+  tasks:
+    - name: Ensure directory /home/ec2-user/data/s4pred exists
+      ansible.builtin.file:
+        path: /home/ec2-user/data/s4pred
+        state: directory
+        mode: '0755'
+
+- name: Clone s4pred GitHub repository
+  hosts: cluster
+  become: yes
+  tasks:
+    - name: Clone s4pred repository from GitHub
+      git:
+        repo: 'https://github.com/psipred/s4pred'
+        clone: yes
+        update: yes
+        dest: '/home/ec2-user/data/s4pred'
+
+- name: Download the model weights tarball
+  get_url:
+    url: "http://bioinfadmin.cs.ucl.ac.uk/downloads/s4pred/weights.tar.gz"
+    dest: "/home/ec2-user/data/s4pred/weights.tar.gz"
+    mode: "0644"
+
+- name: Extract the model weights for s4pred
+  unarchive:
+    src: "/home/ec2-user/data/s4pred/weights.tar.gz"
+    dest: "/home/ec2-user/data/s4pred"
+    remote_src: yes
+
+- name: Install hhsearch
+  hosts: cluster
+  become: yes
+  tasks:
+    - name: Download hhsearch archive
+      ansible.builtin.get_url:
+        url: https://github.com/soedinglab/hh-suite/releases/download/v3.3.0/hhsuite-3.3.0-AVX2-Linux.tar.gz
+        dest: "/home/ec2-user/data/hhsuite-3.3.0-AVX2-Linux.tar.gz"
+        mode: '0644'
+
+    - name: Create hh-suite directory
+      ansible.builtin.file:
+        path: "/home/ec2-user/data/hh-suite"
+        state: directory
+        mode: '0755'
+
+    - name: Extract hhsearch archive
+      ansible.builtin.unarchive:
+        src: "/home/ec2-user/data/hhsuite-3.3.0-AVX2-Linux.tar.gz"
+        dest: "/home/ec2-user/data/hh-suite"
+        remote_src: yes
+        extra_opts: ["--strip-components=1"]
+
+    - name: Add hhsearch to PATH
+      ansible.builtin.lineinfile:
+        path: "/home/ec2-user/.bashrc"
+        line: 'export PATH=$PATH:/home/ec2-user/data/hh-suite/bin:/home/ec2-user/data/hh-suite/scripts'
+        create: yes

@@ -1,0 +1,19 @@
+[client]
+# Client (Scheduler) IP or hostname
+client1 ansible_host=18.130.243.34
+
+[cluster]
+# Cluster (slaver) IP or hostnames
+slaver1 ansible_host=18.168.125.113
+slaver2 ansible_host=13.41.118.62
+slaver3 ansible_host=13.42.80.179
+slaver4 ansible_host=18.135.57.168
+slaver5 ansible_host=35.176.255.87
+
+# You can add your clusters (client machines) here
+# slaver6 ansible_host=XX.XXX.XXX.XX
+
+[cluster:vars]
+# Set the same key pair
+ansible_user=ec2-user
+ansible_ssh_private_key_file=/home/ec2-user/.ssh/new_key

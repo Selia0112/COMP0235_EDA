@@ -1,0 +1,56 @@
+---
+- name: Copy files from client and clusters to host
+  hosts: slaver1
+  gather_facts: no
+  tasks:
+    - name: Copy files from client to host
+      ansible.builtin.fetch:
+        src: "/home/ec2-user/data/hhr_parse.out"
+        dest: "/home/ec2-user/hhr_parse_1.out"
+        flat: yes
+      delegate_to: client
+      run_once: true
+- name: Copy files from client and clusters to host
+  hosts: slaver2
+  gather_facts: no
+  tasks:
+    - name: Copy files from client to host
+      ansible.builtin.fetch:
+        src: "/home/ec2-user/data/hhr_parse.out"
+        dest: "/home/ec2-user/hhr_parse_2.out"
+        flat: yes
+      delegate_to: client
+      run_once: true
+- name: Copy files from client and clusters to host
+  hosts: slaver3
+  gather_facts: no
+  tasks:
+    - name: Copy files from client to host
+      ansible.builtin.fetch:
+        src: "/home/ec2-user/data/hhr_parse.out"
+        dest: "/home/ec2-user/hhr_parse_3.out"
+        flat: yes
+      delegate_to: client
+      run_once: true
+- name: Copy files from client and clusters to host
+  hosts: slaver4
+  gather_facts: no
+  tasks:
+    - name: Copy files from client to host
+      ansible.builtin.fetch:
+        src: "/home/ec2-user/data/hhr_parse.out"
+        dest: "/home/ec2-user/hhr_parse_4.out"
+        flat: yes
+      delegate_to: client
+      run_once: true
+- name: Copy files from client and clusters to host
+  hosts: slaver5
+  gather_facts: no
+  tasks:
+    - name: Copy files from client to host
+      ansible.builtin.fetch:
+        src: "/home/ec2-user/data/hhr_parse.out"
+        dest: "/home/ec2-user/hhr_parse_5.out"
+        flat: yes
+      delegate_to: client
+      run_once: true

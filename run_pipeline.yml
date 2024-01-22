@@ -1,0 +1,11 @@
+---
+- name: Run pipeline script on all clients
+  hosts: cluster
+  gather_facts: no
+  tasks:
+  - name: Run pipeline script with nohup
+    ansible.builtin.shell:
+      cmd: nohup python /home/ec2-user/data/pipeline_script_new.py > /dev/null 2>&1 &
+    async: 0
+    poll: 0
+

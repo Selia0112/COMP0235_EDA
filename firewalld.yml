@@ -1,0 +1,51 @@
+---
+- name: Install and configure firewalld
+  hosts: all
+  become: true
+  tasks:
+    - name: Install firewalld
+      package:
+        name: firewalld
+        state: present
+
+    - name: Start firewalld
+      service:
+        name: firewalld
+        state: started
+        enabled: yes
+
+- name: Open specific ports on host
+  hosts: client
+  become: true
+  tasks:
+    - name: Open port 9100 for host
+      firewalld:
+        port: "9100/tcp"
+        permanent: true
+        state: enabled
+        immediate: true
+
+    - name: Open port 9090 for host
+      firewalld:
+        port: "9090/tcp"
+        permanent: true
+        state: enabled
+        immediate: true
+
+    - name: Open port 3000 for host
+      firewalld:
+        port: "3000/tcp"
+        permanent: true
+        state: enabled
+        immediate: true
+
+- name: Open specific ports on clients and clusters
+  hosts: client:cluster
+  become: true
+  tasks:
+    - name: Open port 9090 for clients and clusters
+      firewalld:
+        port: "9090/tcp"
+        permanent: true
+        state: enabled
+        immediate: true

@@ -1,0 +1,18 @@
+- name: Setup SSH Keys on client and host machines
+  hosts: client
+  tasks:
+    - name: Create keys
+      openssh_keypair:
+        path: /home/ec2-user/.ssh/ansible_key
+        force: no  
+      register: ssh_key
+
+- name: Send Keys to all client machines
+  hosts: all
+  gather_facts: false  
+  tasks:
+    - name: Add the public key to remote machine
+      authorized_key:
+        user: ec2-user
+        state: present
+        key: "{{ hostvars['machine']['ssh_key']['public_key'] }}"

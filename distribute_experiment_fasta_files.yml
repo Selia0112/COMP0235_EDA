@@ -1,0 +1,39 @@
+---
+- name: Distribute experiment fasta files to clusters
+  hosts: cluster
+  tasks:
+  - name: Copy experiment(1).fasta to cluster1
+    ansible.builtin.copy:
+      src: /home/ec2-user/experiment(1).fasta
+      dest: /home/ec2-user/data
+    delegate_to: slaver1
+
+  - name: Copy experiment(2).fasta to cluster2
+    ansible.builtin.copy:
+      src: /home/ec2-user/experiment(2).fasta
+      dest: /home/ec2-user/data
+    delegate_to: slaver2
+
+  - name: Copy experiment(3).fasta to cluster3
+    ansible.builtin.copy:
+      src: /home/ec2-user/experiment(3).fasta
+      dest: /home/ec2-user/data
+    delegate_to: slaver3
+
+  - name: Copy experiment(4).fasta to cluster4
+    ansible.builtin.copy:
+      src: /home/ec2-user/experiment(4).fasta
+      dest: /home/ec2-user/data
+    delegate_to: salver4
+
+  - name: Copy experiment(5).fasta to cluster5
+    ansible.builtin.copy:
+      src: /home/ec2-user/experiment(5).fasta
+      dest: /home/ec2-user/data
+    delegate_to: slaver5
+
+  - name: Copy experiment(6).fasta to cluster6
+    ansible.builtin.copy:
+      src: /home/ec2-user/experiment(6).fasta
+      dest: /home/ec2-user/data
+    delegate_to: slaver6

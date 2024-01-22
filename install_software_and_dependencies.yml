@@ -1,0 +1,27 @@
+---
+- name: Install Python packages on client and clusters
+  hosts: client,cluster
+  become: yes
+  tasks:
+    - name: Install Python3 and pip
+      ansible.builtin.dnf:
+        name:
+          - python3
+          - python3-pip
+          - git
+        state: present
+
+    - name: Install Python dependencies with pip
+      ansible.builtin.pip:
+        name:
+          - torch
+          - torchvision
+          - torchaudio
+        extra_args: --index-url https://download.pytorch.org/whl/cpu
+
+    - name: Install more Python dependencies with pip
+      ansible.builtin.pip:
+        name:
+          - biopython
+          - numpy
+          - scipy

@@ -1,0 +1,24 @@
+---
+- name: Download and unpack pdb70 database on slaver1
+  hosts: slaver1
+  become: yes
+  tasks:
+    - name: Download pdb70 database archive
+      ansible.builtin.get_url:
+        url: https://wwwuser.gwdg.de/~compbiol/data/hhsuite/databases/hhsuite_dbs/pdb70_from_mmcif_latest.tar.gz
+        dest: "/home/ec2-user/data/pdb70_from_mmcif_latest.tar.gz"
+
+    - name: Unarchive pdb70 database
+      ansible.builtin.unarchive:
+        src: "/home/ec2-user/data/pdb70_from_mmcif_latest.tar.gz"
+        dest: "/home/ec2-user/data/"
+        remote_src: yes
+
+- name: Distribute pdb70 database to other clusters
+  hosts: slaver2:slaver3:slaver4:slaver5
+  become: yes
+  tasks:
+    - name: Synchronize pdb70 directory to other clusters
+      ansible.builtin.synchronize:
+        src: "/home/ec2-user/data/pdb70_from_mmcif_latest"
+        dest: "/home/ec2-user/data/"
