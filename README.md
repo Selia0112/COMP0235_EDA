@@ -142,3 +142,4 @@ Execute profile_output.py to generate ave_std, ave_gmean in total
 ``` bash
 python /home/ec2-user/profile_output.py
 ``` 
+Then generate two output files shows the result: profile_output.csv and hits_output.csv
