@@ -23,7 +23,7 @@ scp -i /path/to/lecturer_key ~/.ssh/new_key.pub ec2-user@13.42.80.179
 scp -i /path/to/lecturer_key ~/.ssh/new_key.pub ec2-user@18.135.57.168
 ``` 
 ``` bash
-scp -i /path/to/lecturer_key ~/.ssh/new_key.pub ec2-user@ 35.176.255.87
+scp -i /path/to/lecturer_key ~/.ssh/new_key.pub ec2-user@35.176.255.87
 ``` 
 When you are in client machines
 ``` bash
